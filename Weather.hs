@@ -23,7 +23,7 @@ class BigSeries a b where
 	
 	getValues = drop the size of the header
 	
-	mapValues :: ByteString -> (b -> c) -> a -> [c]
+	mapValues :: ByteString -> (b -> c) -> a -> [c] 
 	
 
 	
