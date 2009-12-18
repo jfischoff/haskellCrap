@@ -1,0 +1,195 @@
+cpool_info
+{
+u30 int_count
+s32 integer[int_count]
+u30 uint_count
+u32 uinteger[uint_count]
+u30 double_count
+d64 double[double_count]
+u30 string_count
+string_info string[string_count]
+u30 namespace_count
+namespace_info namespace[namespace_count]
+u30 ns_set_count
+ns_set_info ns_set[ns_set_count]
+u30 multiname_count
+multiname_info multiname[multiname_count]
+}
+
+string_info
+{
+u30 size
+u8 utf8[size]
+}
+
+namespace_info
+{
+u8 kind
+u30 name
+}
+
+ns_set_info
+{
+u30 count
+u30 ns[count]
+}
+
+multiname_info
+{
+u8 kind
+u8 data[]
+}
+
+multiname_kind_QName
+{
+u30 ns
+u30 name
+}
+
+multiname_kind_RTQName
+{
+u30 name
+}
+
+multiname_kind_RTQNameL
+{
+}
+
+multiname_kind_Multiname
+{
+u30 name
+u30 ns_set
+}
+
+multiname_kind_MultinameL
+{
+u30 ns_set
+}
+
+
+method_info
+{
+u30 param_count
+u30 return_type
+u30 param_type[param_count]
+u30 name
+u8 flags
+option_info options
+param_info param_names
+}
+
+option_info
+{
+u30 option_count
+option_detail option[option_count]
+}
+
+option_detail
+{
+u30 val
+u8 kind
+}
+
+param_info
+{
+u30 param_name[param_count]
+}
+
+metadata_info
+{
+u30 name
+u30 item_count
+item_info items[item_count]
+}
+
+item_info
+{
+u30 key
+u30 value
+}
+
+instance_info
+{
+u30 name
+u30 super_name
+u8 flags
+u30 protectedNs
+u30 intrf_count
+u30 interface[intrf_count]
+u30 iinit
+u30 trait_count
+traits_info trait[trait_count]
+}
+
+traits_info
+{
+u30 name
+u8 kind
+u8 data[]
+u30 metadata_count
+u30 metadata[metadata_count]
+}
+
+trait_slot
+{
+u30 slot_id
+u30 type_name
+u30 vindex
+u8 vkind
+}
+
+trait_class
+{
+u30 slot_id
+u30 classi
+}
+
+trait_function
+{
+u30 slot_id
+u30 function
+}
+
+trait_method
+{
+u30 disp_id
+u30 method
+}
+
+class_info
+{
+u30 cinit
+u30 trait_count
+traits_info traits[trait_count]
+}
+
+script_info
+{
+u30 init
+u30 trait_count
+traits_info trait[trait_count]
+}
+
+method_body_info
+{
+u30 method
+u30 max_stack
+u30 local_count
+u30 init_scope_depth
+u30 max_scope_depth
+u30 code_length
+u8 code[code_length]
+u30 exception_count
+exception_info exception[exception_count]
+u30 trait_count
+traits_info trait[trait_count]
+}
+
+exception_info
+{
+u30 from
+u30 to
+u30 target
+u30 exc_type
+u30 var_name
+}

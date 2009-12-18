@@ -1,0 +1,256 @@
+SI8 Signed 8-bit integer value
+SI16 Signed 16-bit integer value
+SI32 Signed 32-bit integer value
+SI8[n] Signed 8-bit array—n is the number of array elements
+SI16[n] Signed 16-bit array—n is the is number of array elements
+UI8 Unsigned 8-bit integer value
+UI16 Unsigned 16-bit integer value
+UI32 Unsigned 32-bit integer value
+UI8[n] Unsigned 8-bit array—n is the number of array elements
+UI16[n] Unsigned 16-bit array—n is the number of array elements
+UI24[n] Unsigned 24-bit array—n is the number of array elements
+UI32[n] Unsigned 32-bit array—n is the number of array elements
+UI64[n] Unsigned 64-bit array—n is the number of array elements
+
+FIXED 32-bit 16.16 fixed-point number
+FIXED8 16-bit 8.8 fixed-point number
+
+FLOAT16 Half-precision (16-bit) floating-point number
+FLOAT Single-precision (32-bit) IEEE Standard 754 compatible
+DOUBLE Double-precision (64-bit) IEEE Standard 754
+compatible
+
+EncodedU32 Variable length encoded 32-bit unsigned integer
+
+SB[nBits] Signed-bit value (nBits is the number of bits used to store the value)
+UB[nBits] Unsigned-bit value (nBits is the number of bits used to store the value)
+FB[nBits] Signed, fixed-point bit value (nBits is the number of bits used to store the
+value)
+
+STRING
+Field Type Comment
+String UI8[zero or more] Non-null string character data
+StringEnd UI8 Marks end of string; always zero
+
+RGB
+Field Type Comment
+Red UI8 Red color value
+Green UI8 Green color value
+Blue UI8 Blue color value
+
+RGBA
+Field Type Comment
+Red UI8 Red color value
+Green UI8 Green color value
+Blue UI8 Blue color value
+Alpha UI8 alpha value defining opacity
+
+ARGB
+Field Type Comment
+Alpha UI8 alpha value defining opacity
+Red UI8 Red color value
+Green UI8 Green color value
+Blue UI8 Blue color value
+
+RECT
+Field Type Comment
+Nbits UB[5] Bits used for each subsequent
+field
+Xmin SB[Nbits] x minimum position for rectangle in twips
+Xmax SB[Nbits] x maximum position for rectangle in twips
+Ymin SB[Nbits] y minimum position for rectangle in twips
+Ymax SB[Nbits] y maximum position for rectangle in twips
+
+MATRIX
+Field Type Comment
+HasScale UB[1] Has scale values if equal to 1
+NScaleBits If HasScale = 1, UB[5] Bits in each scale value field
+ScaleX If HasScale = 1, FB[NScaleBits] x scale value
+ScaleY If HasScale = 1, FB[NScaleBits] y scale value
+HasRotate UB[1] Has rotate and skew values if equal
+to 1
+NRotateBits If HasRotate = 1, UB[5] Bits in each rotate value field
+RotateSkew0 If HasRotate = 1, FB[NRotateBits] First rotate and skew value
+RotateSkew1 If HasRotate = 1, FB[NRotateBits] Second rotate and skew value
+NTranslateBits UB[5] Bits in each translate value field
+TranslateX SB[NTranslateBits] x translate value in twips
+TranslateY SB[NTranslateBits] y translate value in twips
+
+
+CXFORM
+Field Type Comment
+HasAddTerms UB[1] Has color addition values if equal to 1
+HasMultTerms UB[1] Has color multiply values if equal to 1
+Nbits UB[4] Bits in each value field
+RedMultTerm If HasMultTerms = 1, SB[Nbits] Red multiply value
+GreenMultTerm If HasMultTerms = 1, SB[Nbits] Green multiply value
+BlueMultTerm If HasMultTerms = 1, SB[Nbits] Blue multiply value
+RedAddTerm If HasAddTerms = 1, SB[Nbits] Red addition value
+GreenAddTerm If HasAddTerms = 1, SB[Nbits] Green addition value
+BlueAddTerm If HasAddTerms = 1, SB[Nbits] Blue addition value
+
+
+CXFORMWITHALPHA
+Field Type Comment
+HasAddTerms UB[1] Has color addition values if equal to 1
+HasMultTerms UB[1] Has color multiply values if equal to 1
+Nbits UB[4] Bits in each value field
+RedMultTerm If HasMultTerms = 1, SB[Nbits] Red multiply value
+GreenMultTerm If HasMultTerms = 1, SB[Nbits] Green multiply value
+BlueMultTerm If HasMultTerms = 1, SB[Nbits] Blue multiply value
+AlphaMultTerm If HasMultTerms = 1, SB[Nbits] Alpha multiply value
+RedAddTerm If HasAddTerms = 1, SB[Nbits] Red addition value
+GreenAddTerm If HasAddTerms = 1, SB[Nbits] Green addition value
+BlueAddTerm If HasAddTerms = 1, SB[Nbits] Blue addition value
+AlphaAddTerm If HasAddTerms = 1, SB[Nbits] Transparency addition value
+
+Signature UI8 Signature byte:
+“F” indicates uncompressed
+“C” indicates compressed (SWF 6 and later only)
+Signature UI8 Signature byte always “W”
+Signature UI8 Signature byte always “S”
+Version UI8 Single byte file version (for example, 0x06 for SWF 6)
+FileLength UI32 Length of entire file in bytes
+FrameSize RECT Frame size in twips
+FrameRate UI16 Frame delay in 8.8 fixed number of frames per second
+FrameCount UI16 Total number of frames in file
+
+TagCodeAndLength UI16 Upper 10 bits: tag type
+					  Lower 6 bits: tag length
+					  
+TagCodeAndLength UI16 Tag type and length of 0x3F Packed together as in short header
+Length SI32 Length of tag
+
+PlaceObject
+Field Type Comment
+Header RECORDHEADER Tag type = 4
+CharacterId UI16 ID of character to place
+Depth UI16 Depth of character
+Matrix MATRIX Transform matrix data
+ColorTransform (optional) CXFORM Color transform data
+
+PlaceObject2
+Field Type Comment
+Header RECORDHEADER Tag type = 26
+PlaceFlagHasClipActions UB[1] SWF 5 and later: has clip actions (sprite characters only)
+Otherwise: always 0
+PlaceFlagHasClipDepth UB[1] Has clip depth
+PlaceFlagHasName UB[1] Has name
+PlaceFlagHasRatio UB[1] Has ratio
+PlaceFlagHasColorTransform UB[1] Has color transform
+PlaceFlagHasMatrix UB[1] Has matrix
+PlaceFlagHasCharacter UB[1] Places a character
+PlaceFlagMove UB[1] Defines a character to be moved
+Depth UI16 Depth of character
+CharacterId If PlaceFlagHasCharacter UI16
+ID of character to place
+Matrix If PlaceFlagHasMatrix MATRIX Transform matrix data
+ColorTransform If PlaceFlagHasColorTransform CXFORMWITHALPHA
+Color transform data
+Ratio If PlaceFlagHasRatio UI16
+Name If PlaceFlagHasName STRING Name of character
+ClipDepth If PlaceFlagHasClipDepth UI16 Clip depth (see “Clipping layers” on page 32)
+ClipActions If PlaceFlagHasClipActions CLIPACTIONS SWF 5 and later:
+Clip Actions Data
+
+CLIPACTIONS
+Field Type Comment
+Reserved UI16 Must be 0
+AllEventFlags CLIPEVENTFLAGS All events used in these clip
+actions
+ClipActionRecords CLIPACTIONRECORD [one or more] Individual event handlers
+ClipActionEndFlag If SWF version <= 5, UI16
+If SWF version >= 6, UI32 Must be 0
+
+CLIPACTIONRECORD
+Field Type Comment
+EventFlags CLIPEVENTFLAGS Events to which this handler
+applies
+ActionRecordSize UI32 Offset in bytes from end of this
+field to next
+CLIPACTIONRECORD (or
+ClipActionEndFlag)
+KeyCode If EventFlags contain
+ClipEventKeyPress: UI8
+Otherwise absent
+Key code to trap (see
+“DefineButton2” on page 226)
+Actions ACTIONRECORD
+[one or more]
+Actions to perform
+
+PlaceObject3
+Field Type Comment
+Header RECORDHEADER Tag type = 70
+PlaceFlagHasClipActions UB[1] SWF 5 and later: has clip
+actions (sprite characters
+only)
+Otherwise: always 0
+PlaceFlagHasClipDepth UB[1] Has clip depth
+PlaceFlagHasName UB[1] Has name
+PlaceFlagHasRatio UB[1] Has ratio
+PlaceFlagHasColorTransfo
+rm
+UB[1] Has color transform
+PlaceFlagHasMatrix UB[1] Has matrix
+PlaceFlagHasCharacter UB[1] Places a character
+PlaceFlagMove UB[1] Defines a character to be
+moved
+Reserved UB[3] Must be 0
+PlaceFlagHasImage UB[1] Has class name or
+character ID of bitmap to
+place. If
+PlaceFlagHasClassName,
+use ClassName. If
+PlaceFlagHasCharacter,
+use CharacterId
+PlaceFlagHasClassName UB[1] Has class name of object
+to place
+PlaceFlagHasCacheAsBit
+map
+UB[1] Enables bitmap caching
+PlaceFlagHasBlendMode UB[1] Has blend mode
+PlaceFlagHasFilterList UB[1] Has filter list
+Depth UI16 Depth of character
+ClassName If PlaceFlagHasClassName or
+(PlaceFlagHasImage and
+PlaceFlagHasCharacter), String
+Name of the class to place
+
+CharacterId If PlaceFlagHasCharacter, UI16 ID of character to place
+Matrix If PlaceFlagHasMatrix, MATRIX Transform matrix data
+ColorTransform If PlaceFlagHasColorTransform,
+CXFORMWITHALPHA
+Color transform data
+Ratio If PlaceFlagHasRatio, UI16
+Name If PlaceFlagHasName, STRING Name of character
+ClipDepth If PlaceFlagHasClipDepth, UI16 Clip depth
+(see Clipping layers)
+SurfaceFilterList If PlaceFlagHasFilterList,
+FILTERLIST
+List of filters on this object
+BlendMode If PlaceFlagHasBlendMode, UI8 0 or 1 = normal
+2 = layer
+3 = multiply
+4 = screen
+5 = lighten
+6 = darken
+7 = difference
+8 = add
+9 = subtract
+10 = invert
+11 = alpha
+12 = erase
+13 = overlay
+14 = hardlight
+Values 15 to 255 are
+reserved.
+BitmapCache If PlaceFlagHasCacheAsBitmap,
+UI8
+0 = Bitmap cache disabled
+1-255 = Bitmap cache
+enabled
+ClipActions If PlaceFlagHasClipActions,
+CLIPACTIONS
+SWF 5 and later:
+Clip Actions Data
