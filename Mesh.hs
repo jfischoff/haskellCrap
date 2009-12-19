@@ -1,14 +1,12 @@
 module Mesh where
+import Data.SG
+import Graphics.Rendering.OpenGL hiding (Polygon, multMatrix, Triangle)
 
-newtype Point3D a = (a, a, a)
+type Point3 = Point3' GLdouble
 
-x (a, _, _) = a
-y (_, b, _) = b
-z (_, _, c) = c
+data Triangle = Triangle { t0 :: Point3, t1 :: Point3, t2 :: Point3}
 
-data Triangle a = Triangle { t0 :: a, t1 :: a, t2 :: a}
+newtype SimpleMesh = SimpleMesh [Triangle]
 
-data Mesh a = Mesh {verts :: [Point3D a], triangles :: [Triangle Int]}
 
-newType SimpleMesh = [Triangle Point3D]
 
