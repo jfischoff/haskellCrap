@@ -5,10 +5,8 @@ import Data.SG
 
 main = do mapM_ (\(s,a) -> printf "%-25s: " s >> a) tests
 
-tests  = [("prop_TriangleConstuct", test prop_TriangleConstuct)]
+tests  = [("prop_LineTriangleIntersection", test prop_LineTriangleIntersection)]
 
 
 
-prop_TriangleConstuct = fst (True, Triangle (Point3 (1.0, 1.0, 1.0)) 
-	(Point3 (1.0, 1.0, 1.0)) 
-	(Point3 (1.0, 1.0, 1.0)))
+prop_LineTriangleIntersection = lineTriangleIntersection (Line3 )
